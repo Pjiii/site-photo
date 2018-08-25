@@ -1,0 +1,43 @@
+
+<div class="container">
+    <h1>Ajout d'une photo</h1>
+    <form #photoForm="ngForm" class="col-md-6 col-xs-12" (ngSubmit)="onSubmit()" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+            <label for="name">Nom de l'image</label>
+            <input type="text" class="form-control" name="name" #name="ngModel"
+                [(ngModel)]="model.name" placeholder="Nom de l'image" required>
+            <div class="alert alert-danger" [hidden]="name.untouched || name.valid">Name is required</div>
+        </div>
+        <div class="form-group">
+            <label for="description">Nom de l'image</label>
+            <textarea type="text" class="form-control" name="description" #description="ngModel" rows="6"
+                [(ngModel)]="model.description" placeholder="Description de l'image" required></textarea>
+            <div class="alert alert-danger" [hidden]="description.untouched || description.valid">Description is required</div>
+        </div>
+        <div class="form-group">
+            <label for="url">Image</label>
+            <input type="file" name="file" #url="ngModel" ng2FileSelect [uploader]="uploader" [(ngModel)]="model.autre" />
+        </div>
+        <!-- <div class="form-group">
+            <label for="description">Tags</label>
+            <select class="form-control" name="tag" [(ngModel)]="model.tags" multiple>
+                <option [value]="tag" *ngFor="let tag of tags"> {{tag.name}} </option>
+            </select>
+        </div> -->
+        <div class="form-group">
+            <ng-multiselect-dropdown [placeholder]="'Selectionner un tag'" 
+                #tag="ngModel"
+                name="tags"
+                [data]="tags"
+                [(ngModel)]="selectedTags"
+                [settings]="dropdownSettings">
+                <!-- (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)" -->
+            </ng-multiselect-dropdown>
+        </div>
+        <button type="submit" class="btn btn-default" [disabled]="!photoForm.valid || !uploader.getNotUploadedItems().length">Submit</button>
+    </form>
+    <div class="col-md-6">
+        <img [(src)]="model.url" *ngIf="model.url" />
+    </div>
+</div>

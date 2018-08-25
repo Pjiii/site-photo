@@ -6,11 +6,10 @@ var router = express.Router();
 router.route("/")
     .get((req, res) => {
         tag.find({}, function (err, tags) {
-            res.json({
-                tags: tags.map((tag) => {
-                   return tag.toDto();
-               })
+            var items = tags.map((tag) => {
+                return tag.toDto();
             });
+            res.json(items);
         });    
      })
      .post((req, res) => {
